@@ -15,7 +15,7 @@
 */
 --**************************  create_table_from_file_and_load_work  **************************
 
-create or replace procedure copy_file_into_table (TABLE_NAME STRING, STAGE STRING, PATH STRING, NUMBER_OF_COLUMNS DOUBLE)
+create or replace procedure copy_file_match_column_by_name (TABLE_NAME STRING, STAGE STRING, PATH STRING, NUMBER_OF_COLUMNS DOUBLE)
   returns string
   language javascript strict
   execute as caller
