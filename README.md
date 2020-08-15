@@ -1,2 +1,3 @@
 # Snowflake Data Injestion
- This is code to help move data into Snowflake
+ The code in this repo is available for anyone to use.
+ The intention of this code is to help injest data into Snowflake.
