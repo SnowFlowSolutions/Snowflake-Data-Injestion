@@ -52,14 +52,14 @@ try{
     {numOfBatchColumns=NUMBER_OF_COLUMNS;}
     else
     {
-       //This gets column values spaced apart and returns the first one that is null. We can use that as the last column.
+        //One way to get the number of columns is to use the count of cols from information_schema. That would be the max. Seems slower so I'll use the next approach
+        //sqlStmt = `select count(*) from information_schema.columns where table_name=upper('${TABLE_NAME}')`
+        //This gets column values spaced apart and returns the first one that is null. We can use that as the last column.
       sqlStmt = `select iff($100 is null,'100',iff($300 is null,'300',iff($600 is null,'600',iff($900 is null,'900',iff($1200 is null,'1200',iff($1500 is null,'15000','')))))) from ${stageFullPath}  limit 1 offset 0`;
-      var stmtGetFirstRow = snowflake.execute({ sqlText: sqlStmt});
-      stmtGetFirstRow.next();
-      numOfBatchColumns = stmtGetFirstRow.getColumnValue(1);
+      var stmtGetFirstRow = snowflake.execute({ sqlText: sqlStmt});      
+      stmtGetFirstRow.next();      
+      numOfBatchColumns = stmtGetFirstRow.getColumnValue(1);          
     }
-    //
-    
     selectStmt="";
     for (i = 1; i <= numOfBatchColumns; i++) {
         selectStmt+=",'"+columnDelimiter+"',IfNULL($"+i+",'')";
